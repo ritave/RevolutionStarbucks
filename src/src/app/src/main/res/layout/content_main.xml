@@ -12,4 +12,19 @@
     tools:context="com.ritave.myrevolution.MainActivity"
     tools:showIn="@layout/activity_main">
 
+    <GridView
+        android:id="@+id/galleryView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnWidth="@dimen/thumbnail_size"
+        android:drawSelectorOnTop="true"
+        android:gravity="center"
+        android:numColumns="auto_fit"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="5dp"
+        android:focusable="true"
+        android:clickable="true">
+
+    </GridView>
+
 </RelativeLayout>
