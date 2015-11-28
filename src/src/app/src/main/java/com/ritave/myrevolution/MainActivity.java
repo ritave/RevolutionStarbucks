@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private File mCurrentPhotoFile;
     private ArrayList<ImageItem> mPhotos = new ArrayList<>();
     private GalleryViewAdapter mAdapter;
+    private GridView mGridView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +46,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        GridView gridView = (GridView)findViewById(R.id.galleryView);
+        mGridView = (GridView)findViewById(R.id.galleryView);
         mAdapter = new GalleryViewAdapter(this, R.layout.galleryview_item, mPhotos);
-        gridView.setAdapter(mAdapter);
+        mGridView.setAdapter(mAdapter);
+
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                showPicture(mPhotos.get(position));
+            }
+        });
     }
 
     @Override
@@ -65,6 +74,14 @@ public class MainActivity extends AppCompatActivity {
             }
             mCurrentPhotoFile = null;
         }
+    }
+
+    private void showPicture(ImageItem item)
+    {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setDataAndType(Uri.parse("file:"+item.getPath()), "image/*");
+        startActivity(intent);
     }
 
     private void takePicture()
@@ -107,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ImageItem createImageItem(String path)
     {
-        final int px = (int)getResources().getDimension(R.dimen.thumbnail_size);
+        final int px = mGridView.getColumnWidth();;
         Bitmap thumbnail = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(path), px, px);
         return new ImageItem(thumbnail, path);
     }

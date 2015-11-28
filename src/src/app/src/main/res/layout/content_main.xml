@@ -16,12 +16,12 @@
         android:id="@+id/galleryView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:columnWidth="@dimen/thumbnail_size"
         android:drawSelectorOnTop="true"
         android:gravity="center"
-        android:numColumns="auto_fit"
+        android:numColumns="2"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="5dp"
+        android:verticalSpacing="1dp"
+        android:horizontalSpacing="1dp"
         android:focusable="true"
         android:clickable="true">
 
